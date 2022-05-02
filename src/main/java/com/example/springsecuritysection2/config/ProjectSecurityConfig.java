@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -66,7 +65,7 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 */
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
 		UserDetails userDetails = User.withUsername("admin").password("12345").authorities("admin").build();
 		UserDetails userDetails1 = User.withUsername("user").password("12345").authorities("read").build();
@@ -76,7 +75,7 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public PasswordEncoder passwordEncoder(){
+	public PasswordEncoder passwordEncoder() {
 		return NoOpPasswordEncoder.getInstance();
 	}
 }
