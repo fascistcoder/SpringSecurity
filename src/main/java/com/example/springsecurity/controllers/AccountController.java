@@ -1,4 +1,4 @@
-package com.example.springsecuritysection2.controllers;
+package com.example.springsecurity.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 01/05/22
  */
 @RestController
-public class BalanceController {
-	@GetMapping("/myBalance")
-	public String getBalanceDetails(String input) {
-		return "Here are the balance details from the DB";
+public class AccountController {
+	@GetMapping("/myAccount")
+	public String getAccountDetails(String input) {
+		return "Here are the account details from the DB";
 	}
 }

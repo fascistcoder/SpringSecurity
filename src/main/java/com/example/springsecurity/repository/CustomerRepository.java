@@ -1,6 +1,6 @@
-package com.example.springsecuritysection2.repository;
+package com.example.springsecurity.repository;
 
-import com.example.springsecuritysection2.model.Customer;
+import com.example.springsecurity.model.Customer;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

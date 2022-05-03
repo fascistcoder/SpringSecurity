@@ -1,8 +1,8 @@
-package com.example.springsecuritysection2.service.impl;
+package com.example.springsecurity.service.impl;
 
-import com.example.springsecuritysection2.model.Customer;
-import com.example.springsecuritysection2.model.SecurityCustomer;
-import com.example.springsecuritysection2.repository.CustomerRepository;
+import com.example.springsecurity.model.Customer;
+import com.example.springsecurity.model.SecurityCustomer;
+import com.example.springsecurity.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,4 +1,4 @@
-package com.example.springsecuritysection2.model;
+package com.example.springsecurity.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.example.springsecuritysection2.model;
+package com.example.springsecurity.model;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
