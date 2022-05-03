@@ -2,17 +2,17 @@ package com.example.springsecuritysection2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
+import javax.sql.DataSource;
 
 /**
- * @author <a href="pulkit.aggarwal@upgrad.com">Pulkit Aggarwal</a>
+ * @author <a href="pulkit.aggarwal">Pulkit Aggarwal</a>
  * @version 1.0
  * @since 01/05/22
  */
@@ -47,11 +47,11 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 		.httpBasic();
 
 		// Configuration to permit all the requests
-		//			http.authorizeRequests()
-		//		 		.anyRequest().permitAll()
-		//		 		.and()
-		//		 		.formLogin().and()
-		//		 		.httpBasic();
+//		http.authorizeRequests()
+//				.anyRequest().permitAll()
+//				.and()
+//				.formLogin().and()
+//				 		.httpBasic();
 
 	}
 
@@ -63,16 +63,21 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(NoOpPasswordEncoder.getInstance());
 	}
 */
+//
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
+//		UserDetails userDetails = User.withUsername("admin").password("12345").authorities("admin").build();
+//		UserDetails userDetails1 = User.withUsername("user").password("12345").authorities("read").build();
+//		userDetailsManager.createUser(userDetails);
+//		userDetailsManager.createUser(userDetails1);
+//		auth.userDetailsService(userDetailsManager);
+//	}
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
-		UserDetails userDetails = User.withUsername("admin").password("12345").authorities("admin").build();
-		UserDetails userDetails1 = User.withUsername("user").password("12345").authorities("read").build();
-		userDetailsManager.createUser(userDetails);
-		userDetailsManager.createUser(userDetails1);
-		auth.userDetailsService(userDetailsManager);
-	}
+//	@Bean
+//	public UserDetailsService userDetailsService(DataSource dataSource){
+//		return new JdbcUserDetailsManager(dataSource);
+//	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
