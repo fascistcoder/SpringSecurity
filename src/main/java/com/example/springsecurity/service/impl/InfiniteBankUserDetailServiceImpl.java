@@ -1,7 +1,7 @@
 package com.example.springsecurity.service.impl;
 
 import com.example.springsecurity.model.Customer;
-import com.example.springsecurity.model.SecurityCustomer;
+import com.example.springsecurity.model.InfiniteBankCustomer;
 import com.example.springsecurity.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @AllArgsConstructor
 @Service
-public class UserDetailServiceImpl implements UserDetailsService {
+public class InfiniteBankUserDetailServiceImpl implements UserDetailsService {
 
 	private CustomerRepository customerRepository;
 
@@ -27,6 +27,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		if (customers.size() == 0) {
 			throw new UsernameNotFoundException("User Details Not found for the user : " + username);
 		}
-		return new SecurityCustomer(customers.get(0));
+		return new InfiniteBankCustomer(customers.get(0));
 	}
 }

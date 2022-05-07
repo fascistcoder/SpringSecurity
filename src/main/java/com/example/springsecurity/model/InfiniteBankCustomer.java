@@ -15,7 +15,7 @@ import java.util.List;
  * @since 03/05/22
  */
 @AllArgsConstructor
-public class SecurityCustomer implements UserDetails {
+public class InfiniteBankCustomer implements UserDetails {
 
 	private static final long serialVersionUID = -6690946490872875352L;
 
