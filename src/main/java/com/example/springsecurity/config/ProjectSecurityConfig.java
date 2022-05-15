@@ -6,6 +6,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 
 /**
  * @author <a href="pulkit.aggarwal">Pulkit Aggarwal</a>
@@ -24,7 +30,20 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 		.httpBasic();
 
 		// Custom configurations as per our requirement
-		http.authorizeRequests()
+		http.cors().configurationSource(new CorsConfigurationSource() {
+					@Override public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+						CorsConfiguration configuration = new CorsConfiguration();
+						configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+						configuration.setAllowedMethods(Collections.singletonList("*"));
+						configuration.setAllowCredentials(true);
+						configuration.setAllowedHeaders(Collections.singletonList("*"));
+						configuration.setMaxAge(3600L);
+						return configuration;
+					}
+				}).and()
+				.csrf().ignoringAntMatchers("/contact").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.and().
+				authorizeRequests()
 				.antMatchers("/myAccount").authenticated()
 				.antMatchers("/myCards").authenticated()
 				.antMatchers("/myBalance").authenticated()
@@ -43,11 +62,11 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 		.httpBasic();
 
 		// Configuration to permit all the requests
-//		http.authorizeRequests()
-//				.anyRequest().permitAll()
-//				.and()
-//				.formLogin().and()
-//				 		.httpBasic();
+		//		http.authorizeRequests()
+		//				.anyRequest().permitAll()
+		//				.and()
+		//				.formLogin().and()
+		//				 		.httpBasic();
 
 	}
 
@@ -59,21 +78,21 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(NoOpPasswordEncoder.getInstance());
 	}
 */
-//
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
-//		UserDetails userDetails = User.withUsername("admin").password("12345").authorities("admin").build();
-//		UserDetails userDetails1 = User.withUsername("user").password("12345").authorities("read").build();
-//		userDetailsManager.createUser(userDetails);
-//		userDetailsManager.createUser(userDetails1);
-//		auth.userDetailsService(userDetailsManager);
-//	}
+	//
+	//	@Override
+	//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	//		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
+	//		UserDetails userDetails = User.withUsername("admin").password("12345").authorities("admin").build();
+	//		UserDetails userDetails1 = User.withUsername("user").password("12345").authorities("read").build();
+	//		userDetailsManager.createUser(userDetails);
+	//		userDetailsManager.createUser(userDetails1);
+	//		auth.userDetailsService(userDetailsManager);
+	//	}
 
-//	@Bean
-//	public UserDetailsService userDetailsService(DataSource dataSource){
-//		return new JdbcUserDetailsManager(dataSource);
-//	}
+	//	@Bean
+	//	public UserDetailsService userDetailsService(DataSource dataSource){
+	//		return new JdbcUserDetailsManager(dataSource);
+	//	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {

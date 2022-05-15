@@ -1,6 +1,12 @@
 package com.example.springsecurity.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import com.example.springsecurity.model.Accounts;
+import com.example.springsecurity.model.Customer;
+import com.example.springsecurity.repository.AccountRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -9,9 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 01/05/22
  */
 @RestController
+@AllArgsConstructor
 public class AccountController {
-	@GetMapping("/myAccount")
-	public String getAccountDetails(String input) {
-		return "Here are the account details from the DB";
+
+	private AccountRepository accountsRepository;
+
+	@PostMapping("/myAccount")
+	public Accounts getAccountDetails(@RequestBody Customer customer) {
+		Accounts accounts = accountsRepository.findByCustomerId(customer.getId());
+		return StringUtils.hasText(accounts.toString()) ? accounts : null;
 	}
 }
