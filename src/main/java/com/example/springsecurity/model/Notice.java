@@ -32,10 +32,10 @@ public class Notice {
 	@Column(name = "notice_details")
 	private String noticeDetails;
 
-	@Column(name = "notic_beg_date")
+	@Column(name = "notice_beg_date")
 	private Date noticeBegDate;
 
-	@Column(name = "notic_end_date")
+	@Column(name = "notice_end_date")
 	private Date noticeEndDate;
 
 	@Column(name = "create_date")

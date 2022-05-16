@@ -6,9 +6,12 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 /**
  * @author <a href="pulkit.aggarwal@upgrad.com">Pulkit Aggarwal</a>
@@ -39,4 +42,8 @@ public class Customer {
 
 	@Column(name = "create_date")
 	private String createDate;
+
+	@JsonIgnore
+	@OneToMany(mappedBy="customer",fetch= FetchType.EAGER)
+	private Set<Authority> authorities;
 }

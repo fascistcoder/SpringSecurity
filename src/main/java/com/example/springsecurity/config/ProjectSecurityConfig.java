@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -40,13 +39,13 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 						configuration.setMaxAge(3600L);
 						return configuration;
 					}
-				}).and()
-				.csrf().ignoringAntMatchers("/contact").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-				.and().
+				})
+				//.and().csrf().ignoringAntMatchers("/contact").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().
+				.and().csrf().disable().authorizeRequests().and().
 				authorizeRequests()
-				.antMatchers("/myAccount").authenticated()
-				.antMatchers("/myCards").authenticated()
-				.antMatchers("/myBalance").authenticated()
+				.antMatchers("/myAccount").hasRole("USER")
+				.antMatchers("/myCards").hasRole("ROOT")
+				.antMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
 				.antMatchers("/myLoans").authenticated()
 				.antMatchers("/notices").permitAll()
 				.antMatchers("/contact").permitAll()
