@@ -2,11 +2,14 @@ package com.example.springsecurity.config;
 
 import com.example.springsecurity.filter.AuthoritiesLoggingAfterFilter;
 import com.example.springsecurity.filter.AuthoritiesLoggingAtFilter;
+import com.example.springsecurity.filter.JWTTokenGeneratorFilter;
+import com.example.springsecurity.filter.JWTTokenValidatorFilter;
 import com.example.springsecurity.filter.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -31,20 +34,30 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 		.httpBasic();
 
 		// Custom configurations as per our requirement
-		http.cors().configurationSource(request -> {
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.cors().configurationSource(request -> {
 					CorsConfiguration configuration = new CorsConfiguration();
 					configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
 					configuration.setAllowedMethods(Collections.singletonList("*"));
 					configuration.setAllowCredentials(true);
 					configuration.setAllowedHeaders(Collections.singletonList("*"));
+					configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 					configuration.setMaxAge(3600L);
 					return configuration;
 				})
 				//.and().csrf().ignoringAntMatchers("/contact").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().
-				.and().csrf().disable().authorizeRequests()
-				.and().addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+				.and().csrf().disable()
+
+				.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+
 				.addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+
+				.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
+
+				.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+
 				.addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class).
+
 				authorizeRequests()
 				.antMatchers("/myAccount").hasRole("USER")
 				.antMatchers("/myCards").hasRole("ROOT")
