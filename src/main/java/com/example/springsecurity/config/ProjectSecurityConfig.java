@@ -1,15 +1,17 @@
 package com.example.springsecurity.config;
 
+import com.example.springsecurity.filter.AuthoritiesLoggingAfterFilter;
+import com.example.springsecurity.filter.AuthoritiesLoggingAtFilter;
+import com.example.springsecurity.filter.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 
 /**
@@ -29,19 +31,20 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 		.httpBasic();
 
 		// Custom configurations as per our requirement
-		http.cors().configurationSource(new CorsConfigurationSource() {
-					@Override public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-						CorsConfiguration configuration = new CorsConfiguration();
-						configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-						configuration.setAllowedMethods(Collections.singletonList("*"));
-						configuration.setAllowCredentials(true);
-						configuration.setAllowedHeaders(Collections.singletonList("*"));
-						configuration.setMaxAge(3600L);
-						return configuration;
-					}
+		http.cors().configurationSource(request -> {
+					CorsConfiguration configuration = new CorsConfiguration();
+					configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+					configuration.setAllowedMethods(Collections.singletonList("*"));
+					configuration.setAllowCredentials(true);
+					configuration.setAllowedHeaders(Collections.singletonList("*"));
+					configuration.setMaxAge(3600L);
+					return configuration;
 				})
 				//.and().csrf().ignoringAntMatchers("/contact").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().
-				.and().csrf().disable().authorizeRequests().and().
+				.and().csrf().disable().authorizeRequests()
+				.and().addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+				.addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+				.addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class).
 				authorizeRequests()
 				.antMatchers("/myAccount").hasRole("USER")
 				.antMatchers("/myCards").hasRole("ROOT")

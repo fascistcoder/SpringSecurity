@@ -11,4 +11,5 @@ import lombok.experimental.UtilityClass;
 public class ApplicationConstants {
 	public static final String ERROR_MSG = "An unknown error occurred";
 	public static final String SUCCESS_MSG = "Request Successfully processed";
+	public static final String AUTHENTICATION_SCHEME_BASIC = "Basic";
 }
