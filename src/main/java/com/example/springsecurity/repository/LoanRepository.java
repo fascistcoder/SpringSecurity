@@ -2,6 +2,7 @@ package com.example.springsecurity.repository;
 
 import com.example.springsecurity.model.Loans;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -11,5 +12,6 @@ import java.util.List;
  * @since 15/05/22
  */
 public interface LoanRepository extends CrudRepository<Loans, Long> {
+	@PreAuthorize("hasRole('ROOT')")
 	List<Loans> findByCustomerIdOrderByStartDateDesc(int customerId);
 }

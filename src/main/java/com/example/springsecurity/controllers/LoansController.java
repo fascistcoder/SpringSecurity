@@ -4,7 +4,7 @@ import com.example.springsecurity.model.Customer;
 import com.example.springsecurity.model.Loans;
 import com.example.springsecurity.repository.LoanRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +22,7 @@ public class LoansController {
 	private LoanRepository loanRepository;
 
 	@PostMapping("/myLoans")
+	@PostAuthorize("hasRole('ROOT')")
 	public List<Loans> getLoanDetails(@RequestBody Customer customer) {
 		List<Loans> loans = loanRepository.findByCustomerIdOrderByStartDateDesc(customer.getId());
 		return !loans.isEmpty() ? loans : null;

@@ -3,6 +3,8 @@ package com.example.springsecurity.controllers;
 import com.example.springsecurity.model.Contact;
 import com.example.springsecurity.repository.ContactRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,8 @@ public class ContactController {
 	private ContactRepository contactRepository;
 
 	@PostMapping("/contact")
+//	@PreFilter("filterObject.contactName == 'Test'")
+	@PostFilter("filterObject.contactName == 'Test'")
 	public Contact saveContactInquiryDetails(@RequestBody Contact contact) {
 		contact.setContactId(getServiceReqNumber());
 		contact.setCreateDate(new Date(System.currentTimeMillis()));
