@@ -5,7 +5,6 @@ import com.example.resouceserver.model.Customer;
 import com.example.resouceserver.model.Loans;
 import com.example.resouceserver.reposiorty.LoanRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +23,7 @@ public class LoansController {
 
 	@PostMapping("/myLoans")
 	public List<Loans> getLoanDetails(@RequestBody Customer customer) {
-		List<Loans> loans = loanRepository.findByCustomerIdOrderByStartDateDesc(customer.getId());
+		List<Loans> loans = loanRepository.findByEmailOrderByStartDateDesc(customer.getEmail());
 		return !loans.isEmpty() ? loans : null;
 	}
 }

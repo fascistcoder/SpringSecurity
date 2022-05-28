@@ -2,7 +2,6 @@ package com.example.resouceserver.reposiorty;
 
 import com.example.resouceserver.model.Loans;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -12,5 +11,5 @@ import java.util.List;
  * @since 15/05/22
  */
 public interface LoanRepository extends CrudRepository<Loans, Long> {
-	List<Loans> findByCustomerIdOrderByStartDateDesc(int customerId);
+	List<Loans> findByEmailOrderByStartDateDesc(String email);
 }

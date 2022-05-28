@@ -23,18 +23,15 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 		JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
 		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeyCloakRoleConverter());
 
-		http.cors().configurationSource(new CorsConfigurationSource() {
-					@Override public CorsConfiguration getCorsConfiguration(HttpServletRequest
-							request) {
-						CorsConfiguration config = new CorsConfiguration();
-						config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-						config.setAllowedMethods(Collections.singletonList("*"));
-						config.setAllowCredentials(true);
-						config.setAllowedHeaders(Collections.singletonList("*"));
-						config.setMaxAge(3600L);
-						return config;
-					}
-				}).and()
+		http.cors().configurationSource(request -> {
+			CorsConfiguration config = new CorsConfiguration();
+			config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+			config.setAllowedMethods(Collections.singletonList("*"));
+			config.setAllowCredentials(true);
+			config.setAllowedHeaders(Collections.singletonList("*"));
+			config.setMaxAge(3600L);
+			return config;
+		}).and()
 				.authorizeRequests()
 				.antMatchers("/myAccount").hasAnyRole("USER")
 				.antMatchers("/myBalance").hasAnyRole("ADMIN")

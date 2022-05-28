@@ -26,8 +26,7 @@ public class Loans {
 	@Column(name = "loan_number")
 	private int loanNumber;
 
-	@Column(name = "customer_id")
-	private int customerId;
+	private String email;
 
 	@Column(name="start_date")
 	private Date startDate;

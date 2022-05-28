@@ -12,5 +12,5 @@ import java.util.List;
  * @since 15/05/22
  */
 public interface CardRepository extends CrudRepository<Cards, Long> {
-	List<Cards> findByCustomerId(int customerId);
+	List<Cards> findByEmail(String email);
 }

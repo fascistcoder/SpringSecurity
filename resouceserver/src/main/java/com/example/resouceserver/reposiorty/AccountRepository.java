@@ -10,5 +10,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface AccountRepository extends CrudRepository<Accounts, Long> {
 
-	Accounts findByCustomerId(int customerId);
+	Accounts findAccountsByEmail(String email);
 }

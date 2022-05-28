@@ -27,8 +27,7 @@ public class Cards {
 	@Column(name = "card_id")
 	private int cardId;
 
-	@Column(name = "customer_id")
-	private int customerId;
+	private String email;
 
 	@Column(name = "card_number")
 	private String cardNumber;

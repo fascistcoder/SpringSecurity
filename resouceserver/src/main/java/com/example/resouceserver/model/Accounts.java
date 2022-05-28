@@ -17,8 +17,7 @@ import javax.persistence.Id;
 @Setter
 public class Accounts {
 
-	@Column(name = "customer_id")
-	private int customerId;
+	private String email;
 
 	@Column(name="account_number")
 	@Id

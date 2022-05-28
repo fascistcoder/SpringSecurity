@@ -23,7 +23,6 @@ public class BalanceController {
 
 	@PostMapping("/myBalance")
 	public List<AccountsTransaction> getBalanceDetails(@RequestBody Customer customer) {
-		return accountTransactionsRepository.findAccountsTransactionByCustomerIdOrderByTransactionDateDesc(
-				customer.getId());
+		return accountTransactionsRepository.findByEmailOrderByCreateDateDesc(customer.getEmail());
 	}
 }

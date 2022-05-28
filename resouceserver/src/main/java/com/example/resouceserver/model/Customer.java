@@ -42,8 +42,4 @@ public class Customer {
 
 	@Column(name = "create_date")
 	private String createDate;
-
-	@JsonIgnore
-	@OneToMany(mappedBy="customer",fetch= FetchType.EAGER)
-	private Set<Authority> authorities;
 }

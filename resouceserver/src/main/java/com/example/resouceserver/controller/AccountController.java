@@ -23,7 +23,7 @@ public class AccountController {
 
 	@PostMapping("/myAccount")
 	public Accounts getAccountDetails(@RequestBody Customer customer) {
-		Accounts accounts = accountsRepository.findByCustomerId(customer.getId());
+		Accounts accounts = accountsRepository.findAccountsByEmail(customer.getEmail());
 		return StringUtils.hasText(accounts.toString()) ? accounts : null;
 	}
 }

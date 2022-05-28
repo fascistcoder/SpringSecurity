@@ -11,5 +11,5 @@ import java.util.List;
  * @since 15/05/22
  */
 public interface AccountTransactionsRepository extends CrudRepository<AccountsTransaction, Long> {
-	List<AccountsTransaction> findAccountsTransactionByCustomerIdOrderByTransactionDateDesc(int customerId);
+	List<AccountsTransaction> findByEmailOrderByCreateDateDesc(String email);
 }

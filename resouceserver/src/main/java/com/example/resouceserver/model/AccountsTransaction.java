@@ -30,8 +30,7 @@ public class AccountsTransaction {
 	@Column(name = "customer_id")
 	private int customerId;
 
-	@Column(name = "transaction_date")
-	private Date transactionDate;
+	private String email;
 
 	@Column(name = "transaction_summary")
 	private String transactionSummary;

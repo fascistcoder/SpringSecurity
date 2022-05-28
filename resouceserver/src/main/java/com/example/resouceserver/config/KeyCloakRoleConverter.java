@@ -20,15 +20,17 @@ public class KeyCloakRoleConverter implements Converter<Jwt, Collection<GrantedA
 
 	@Override public Collection<GrantedAuthority> convert(Jwt jwt) {
 
-		Map<String, Object> relamAccess = (Map<String, Object>) jwt.getClaims().get("relam_access");
+		Map<String, Object> relamAccess = (Map<String, Object>) jwt.getClaims().get("realm_access");
 
 		if(relamAccess == null || relamAccess.isEmpty()){
 			return new ArrayList<>();
 		}
 
-		return ((List<String>) relamAccess.get("roles"))
+		Collection<GrantedAuthority> grantedAuthorities = ((List<String>) relamAccess.get("roles"))
 				.stream().map(roleName -> "ROLE_" + roleName)
 				.map(SimpleGrantedAuthority::new)
 				.collect(Collectors.toList());
+
+		return grantedAuthorities;
 	}
 }
